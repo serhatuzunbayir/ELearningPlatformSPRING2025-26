@@ -1,0 +1,82 @@
+@baseUrl = http://localhost:5215
+@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBwbGF0Zm9ybS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc3ODM2NjcwMSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.Y_15F8BxthR60CFlaoE37HqGTjmRYcInbNVkZ5B8otE
+
+### Kayıt ol
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "name": "Ege Yılmaz",
+  "email": "ege@test.com",
+  "password": "12345678"
+}
+
+###
+
+### Giriş yap (Öğrenci)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ege@test.com",
+  "password": "12345678"
+}
+
+###
+
+### Giriş yap (Admin)
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@platform.com",
+  "password": "Admin1234!"
+}
+
+###
+
+### Tüm kursları listele
+GET {{baseUrl}}/api/courses
+
+###
+
+### Kategori ve zorluğa göre filtrele (difficulty: 0=Beginner, 1=Intermediate, 2=Advanced)
+GET {{baseUrl}}/api/courses?category=programlama&difficulty=0
+
+###
+
+### Kurs oluştur (Admin token gerekli)
+POST {{baseUrl}}/api/courses
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "C# ile Nesne Yönelimli Programlama",
+  "description": "C# dilinde OOP kavramlarını öğrenin.",
+  "category": "Programlama",
+  "difficulty": 0,
+  "ectsCredit": 5
+}
+
+###
+
+### Kurs düzenle (Admin token gerekli)
+PUT {{baseUrl}}/api/courses/1
+Content-Type: application/json
+Authorization: Bearer {{adminToken}}
+
+{
+  "title": "C# ile OOP - Güncel",
+  "description": "Güncellenmiş açıklama.",
+  "category": "Programlama",
+  "difficulty": 1,
+  "ectsCredit": 6
+}
+
+###
+
+### Kurs sil (Admin token gerekli)
+DELETE {{baseUrl}}/api/courses/1
+Authorization: Bearer {{adminToken}}
+
+###
