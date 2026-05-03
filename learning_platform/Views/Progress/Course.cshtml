@@ -1,0 +1,86 @@
+@model learning_platform.Models.CourseProgressDto
+@{
+    ViewData["Title"] = "Course Progress";
+}
+
+<div class="container mt-4">
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-link text-decoration-none mb-3"><i class="bi bi-arrow-left"></i> Back to Dashboard</a>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0 mb-4" style="border-radius: 15px;">
+        <div class="card-body p-4 bg-primary text-white" style="border-radius: 15px;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="font-weight-bold mb-1">@Model.CourseTitle</h2>
+                    <p class="mb-0">You have completed @Model.CompletedModules out of @Model.TotalModules modules.</p>
+                </div>
+                <div class="text-end">
+                    <h1 class="display-4 font-weight-bold mb-0">@Model.CompletionPercentage.ToString("0.0")%</h1>
+                </div>
+            </div>
+            
+            <div class="progress mt-3 bg-white bg-opacity-25" style="height: 15px; border-radius: 10px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: @Model.CompletionPercentage%;" aria-valuenow="@Model.CompletionPercentage" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="font-weight-bold mb-4"><i class="bi bi-collection-play"></i> Course Modules</h4>
+    
+    <div class="list-group list-group-flush mb-5">
+        @foreach (var module in Model.Modules.OrderBy(m => m.Order))
+        {
+            <div class="list-group-item d-flex justify-content-between align-items-center py-4 border-bottom">
+                <div class="d-flex align-items-center">
+                    @if (module.IsCompleted)
+                    {
+                        <div class="me-3 fs-3 text-success"><i class="bi bi-check-circle-fill"></i></div>
+                    }
+                    else
+                    {
+                        <div class="me-3 fs-3 text-secondary"><i class="bi bi-circle"></i></div>
+                    }
+                    
+                    <div>
+                        <h5 class="mb-1 font-weight-bold">Module @module.Order: @module.Title</h5>
+                        @if (module.IsCompleted && module.CompletedAt.HasValue)
+                        {
+                            <small class="text-muted">Completed on @module.CompletedAt.Value.ToString("g")</small>
+                        }
+                        else
+                        {
+                            <small class="text-muted">Not yet completed</small>
+                        }
+                    </div>
+                </div>
+                
+                <div>
+                    @if (!module.IsCompleted)
+                    {
+                        <form asp-action="CompleteModule" method="post">
+                            <input type="hidden" name="moduleId" value="@module.ModuleId" />
+                            <input type="hidden" name="courseId" value="@Model.CourseId" />
+                            <button type="submit" class="btn btn-outline-success" style="border-radius: 8px;">
+                                <i class="bi bi-check2"></i> Mark as Complete
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="btn btn-success disabled" style="border-radius: 8px;">
+                            <i class="bi bi-check2-all"></i> Completed
+                        </button>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</div>

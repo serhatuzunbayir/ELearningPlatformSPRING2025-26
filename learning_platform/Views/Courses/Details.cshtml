@@ -1,0 +1,61 @@
+@model learning_platform.Models.CourseDetailDto
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container mt-5">
+    <a asp-action="Index" class="btn btn-link text-decoration-none mb-3"><i class="bi bi-arrow-left"></i> Back to Courses</a>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow border-0" style="border-radius: 15px;">
+        <div class="card-body p-5">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div>
+                    <h1 class="font-weight-bold display-5 mb-2">@Model.Title</h1>
+                    <span class="badge bg-primary fs-6 me-2">@Model.Category</span>
+                    <span class="badge bg-secondary fs-6">@Model.Difficulty</span>
+                </div>
+                <div class="text-end">
+                    <div class="fs-4 fw-bold text-success">@Model.EctsCredit ECTS</div>
+                </div>
+            </div>
+
+            <p class="lead text-muted mb-5" style="white-space: pre-line;">@Model.Description</p>
+
+            <h4 class="font-weight-bold mb-3"><i class="bi bi-list-check"></i> Course Modules (@Model.Modules.Count)</h4>
+            <div class="list-group list-group-flush mb-5">
+                @foreach (var module in Model.Modules.OrderBy(m => m.Order))
+                {
+                    <div class="list-group-item d-flex align-items-center py-3">
+                        <div class="me-3 fs-4 text-muted"><i class="bi bi-file-earmark-text"></i></div>
+                        <div>
+                            <h6 class="mb-0 font-weight-bold">Module @module.Order: @module.Title</h6>
+                        </div>
+                    </div>
+                }
+                @if (!Model.Modules.Any())
+                {
+                    <div class="list-group-item text-muted">No modules have been added to this course yet.</div>
+                }
+            </div>
+
+            <hr class="my-4" />
+
+            <form asp-action="Enroll" method="post" class="text-center">
+                <input type="hidden" name="courseId" value="@Model.Id" />
+                <button type="submit" class="btn btn-success btn-lg px-5 py-3" style="border-radius: 12px; font-weight: 600;">
+                    <i class="bi bi-person-plus-fill me-2"></i> Send Enrollment Request
+                </button>
+                <p class="text-muted mt-3 small">By requesting enrollment, your request will be sent to an administrator for approval.</p>
+            </form>
+        </div>
+    </div>
+</div>

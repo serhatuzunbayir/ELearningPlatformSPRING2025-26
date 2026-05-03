@@ -51,6 +51,19 @@ using (var scope = app.Services.CreateScope())
         });
         db.SaveChanges();
     }
+
+    if (!db.Courses.Any(c => c.Title == "Müzik ve Bilgisayarlar"))
+    {
+        db.Courses.Add(new Course
+        {
+            Title = "Müzik ve Bilgisayarlar",
+            Description = "Bilgisayar destekli müzik üretimi ve algoritmik kompozisyon.",
+            Category = "Programlama",
+            Difficulty = DifficultyLevel.Intermediate,
+            EctsCredit = 5
+        });
+        db.SaveChanges();
+    }
 }
 
 app.UseHttpsRedirection();

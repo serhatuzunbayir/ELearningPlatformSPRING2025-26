@@ -1,0 +1,77 @@
+@model List<learning_platform.Models.CourseListDto>
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4 font-weight-bold">Available Courses</h1>
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="card shadow-sm border-0 mb-4" style="border-radius: 15px;">
+        <div class="card-body">
+            <form method="get" asp-action="Index" class="row gx-3 gy-2 align-items-center">
+                <div class="col-sm-4">
+                    <label class="visually-hidden" for="category">Category</label>
+                    <input type="text" class="form-control" id="category" name="category" placeholder="Search by Category (e.g. Programming)" value="@ViewBag.SelectedCategory">
+                </div>
+                <div class="col-sm-4">
+                    <label class="visually-hidden" for="difficulty">Difficulty</label>
+                    <select class="form-select" id="difficulty" name="difficulty">
+                        <option value="">All Difficulties</option>
+                        <option value="Beginner" selected="@(ViewBag.SelectedDifficulty == "Beginner" ? "selected" : null)">Beginner</option>
+                        <option value="Intermediate" selected="@(ViewBag.SelectedDifficulty == "Intermediate" ? "selected" : null)">Intermediate</option>
+                        <option value="Advanced" selected="@(ViewBag.SelectedDifficulty == "Advanced" ? "selected" : null)">Advanced</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 8px;"><i class="bi bi-filter"></i> Filter</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary ms-2" style="border-radius: 8px;">Clear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var course in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0" style="border-radius: 15px; transition: transform 0.2s;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-primary rounded-pill">@course.Category</span>
+                            <span class="badge bg-secondary rounded-pill">@course.Difficulty</span>
+                        </div>
+                        <h5 class="card-title font-weight-bold">@course.Title</h5>
+                        <p class="card-text text-muted">
+                            <i class="bi bi-journal-bookmark"></i> @course.ModuleCount Modules <br />
+                            <i class="bi bi-award"></i> @course.EctsCredit ECTS
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-end pb-3">
+                        <a asp-action="Details" asp-route-id="@course.Id" class="btn btn-outline-primary" style="border-radius: 10px;">
+                            View Details <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+        
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center mt-5">
+                <p class="text-muted" style="font-size: 1.2rem;">No courses available right now. Check back later!</p>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+</style>
