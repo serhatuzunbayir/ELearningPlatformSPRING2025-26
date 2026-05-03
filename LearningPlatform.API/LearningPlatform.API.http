@@ -1,5 +1,6 @@
 @baseUrl = http://localhost:5215
-@adminToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBwbGF0Zm9ybS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc3ODM2NjcwMSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.Y_15F8BxthR60CFlaoE37HqGTjmRYcInbNVkZ5B8otE
+@studentToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJlZ2VAdGVzdC5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJTdHVkZW50IiwiZXhwIjoxNzc4NDEzNjk5LCJpc3MiOiJMZWFybmluZ1BsYXRmb3JtIiwiYXVkIjoiTGVhcm5pbmdQbGF0Zm9ybVVzZXJzIn0.pf2aRKy4oxF9QHW-zg5Y36sR9xx-ZIjeeO4Go5lTW1g
+@adminToken =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBwbGF0Zm9ybS5jb20iLCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJBZG1pbiIsImV4cCI6MTc3ODM2NjcwMSwiaXNzIjoiTGVhcm5pbmdQbGF0Zm9ybSIsImF1ZCI6IkxlYXJuaW5nUGxhdGZvcm1Vc2VycyJ9.Y_15F8BxthR60CFlaoE37HqGTjmRYcInbNVkZ5B8otE
 
 ### Kayıt ol
 POST {{baseUrl}}/api/auth/register
@@ -40,7 +41,7 @@ GET {{baseUrl}}/api/courses
 
 ###
 
-### Kategori ve zorluğa göre filtrele (difficulty: 0=Beginner, 1=Intermediate, 2=Advanced)
+### Kategori ve zorluğa göre filtrele
 GET {{baseUrl}}/api/courses?category=programlama&difficulty=0
 
 ###
@@ -78,5 +79,81 @@ Authorization: Bearer {{adminToken}}
 ### Kurs sil (Admin token gerekli)
 DELETE {{baseUrl}}/api/courses/1
 Authorization: Bearer {{adminToken}}
+
+###
+
+### Kursa kayıt talebi gönder (Öğrenci token gerekli)
+POST {{baseUrl}}/api/enrollments
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "courseId": 1
+}
+
+###
+
+### Bekleyen talepleri listele (Admin token gerekli)
+GET {{baseUrl}}/api/enrollments/pending
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Talebi onayla (Admin token gerekli)
+PUT {{baseUrl}}/api/enrollments/1/approve
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Talebi reddet (Admin token gerekli)
+PUT {{baseUrl}}/api/enrollments/1/reject
+Authorization: Bearer {{adminToken}}
+
+###
+
+### Kendi kayıtlarımı gör (Öğrenci token gerekli)
+GET {{baseUrl}}/api/enrollments/my
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Modül tamamla (Öğrenci token gerekli)
+POST {{baseUrl}}/api/progress/complete
+Content-Type: application/json
+Authorization: Bearer {{studentToken}}
+
+{
+  "moduleId": 1
+}
+
+###
+
+### Kurs ilerleme detayı (Öğrenci token gerekli)
+GET {{baseUrl}}/api/progress/course/1
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Genel ilerleme özeti (Öğrenci token gerekli)
+GET {{baseUrl}}/api/progress/summary
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Çalışma planı oluştur (Öğrenci token gerekli)
+POST {{baseUrl}}/api/studyplan/generate
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Çalışma planını görüntüle (Öğrenci token gerekli)
+GET {{baseUrl}}/api/studyplan
+Authorization: Bearer {{studentToken}}
+
+###
+
+### Çalışma planını sil (Öğrenci token gerekli)
+DELETE {{baseUrl}}/api/studyplan
+Authorization: Bearer {{studentToken}}
 
 ###

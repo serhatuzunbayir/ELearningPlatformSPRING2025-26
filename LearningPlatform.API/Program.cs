@@ -1,6 +1,7 @@
 using System.Text;
 using LearningPlatform.API.Data;
 using LearningPlatform.API.Models;
+using LearningPlatform.API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -29,6 +30,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
+builder.Services.AddSingleton<EnrollmentService>();
+builder.Services.AddSingleton<StudyPlanService>();
 
 var app = builder.Build();
 
