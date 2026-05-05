@@ -1,0 +1,64 @@
+@model learning_platform.Models.CreateCourseDto
+@{
+    ViewData["Title"] = "New Course";
+}
+
+<div class="container mt-4">
+    <a asp-action="Courses" class="btn btn-link text-decoration-none mb-3">
+        <i class="bi bi-arrow-left"></i> Back to Courses
+    </a>
+
+    <div class="card shadow-sm border-0" style="border-radius: 15px;">
+        <div class="card-body p-5">
+            <h2 class="font-weight-bold mb-4"><i class="bi bi-plus-circle"></i> Create New Course</h2>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    <div asp-validation-summary="All"></div>
+                </div>
+            }
+
+            <form asp-action="CreateCourse" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label fw-bold">Title</label>
+                    <input asp-for="Title" class="form-control" placeholder="e.g. Introduction to C#" required />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label fw-bold">Description</label>
+                    <textarea asp-for="Description" class="form-control" rows="4"
+                              placeholder="What does this course cover?" required></textarea>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Category" class="form-label fw-bold">Category</label>
+                        <input asp-for="Category" class="form-control" placeholder="e.g. Programming" required />
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Difficulty" class="form-label fw-bold">Difficulty</label>
+                        <select asp-for="Difficulty" class="form-select">
+                            <option value="Beginner">Beginner</option>
+                            <option value="Intermediate">Intermediate</option>
+                            <option value="Advanced">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="EctsCredit" class="form-label fw-bold">ECTS</label>
+                        <input asp-for="EctsCredit" type="number" min="0" max="30" class="form-control" required />
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 justify-content-end mt-4">
+                    <a asp-action="Courses" class="btn btn-outline-secondary" style="border-radius: 10px;">Cancel</a>
+                    <button type="submit" class="btn btn-success" style="border-radius: 10px;">
+                        <i class="bi bi-check-circle"></i> Create Course
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

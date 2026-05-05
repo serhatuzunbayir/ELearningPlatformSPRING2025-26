@@ -5,7 +5,7 @@ using learning_platform.Services;
 
 namespace learning_platform.Controllers;
 
-[Authorize]
+[Authorize(Roles = "Student")]
 public class DashboardController : Controller
 {
     private readonly ApiService _apiService;

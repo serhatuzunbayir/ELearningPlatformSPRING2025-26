@@ -1,0 +1,77 @@
+@model List<learning_platform.Models.EnrollmentDto>
+@{
+    ViewData["Title"] = "Pending Enrollments";
+}
+
+<div class="container mt-4">
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+    }
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="font-weight-bold"><i class="bi bi-hourglass-split"></i> Pending Enrollments</h1>
+        <a asp-action="Index" class="btn btn-outline-secondary" style="border-radius: 10px;">
+            <i class="bi bi-arrow-left"></i> Admin Dashboard
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0" style="border-radius: 15px;">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Student</th>
+                            <th>Email</th>
+                            <th>Course</th>
+                            <th>Requested</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var enrollment in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold">@enrollment.StudentName</td>
+                                <td class="text-muted">@enrollment.StudentEmail</td>
+                                <td>@enrollment.CourseTitle</td>
+                                <td class="text-muted">@enrollment.RequestedAt.ToLocalTime().ToString("dd MMM yyyy HH:mm")</td>
+                                <td class="text-end pe-4">
+                                    <form asp-action="ApproveEnrollment" asp-route-id="@enrollment.Id"
+                                          method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-success" style="border-radius: 8px;">
+                                            <i class="bi bi-check-lg"></i> Approve
+                                        </button>
+                                    </form>
+                                    <form asp-action="RejectEnrollment" asp-route-id="@enrollment.Id"
+                                          method="post" class="d-inline"
+                                          onsubmit="return confirm('Reject @enrollment.StudentName\'s request for @enrollment.CourseTitle?');">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" style="border-radius: 8px;">
+                                            <i class="bi bi-x-lg"></i> Reject
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                        @if (!Model.Any())
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-5">
+                                    <i class="bi bi-check2-circle display-4 d-block mb-2 text-success"></i>
+                                    All caught up. No pending enrollment requests.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

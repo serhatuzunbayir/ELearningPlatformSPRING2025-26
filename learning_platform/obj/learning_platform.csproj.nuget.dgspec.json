@@ -1,25 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PC\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\learning_platform\\learning_platform.csproj": {}
+    "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/learning_platform/learning_platform.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PC\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\learning_platform\\learning_platform.csproj": {
+    "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/learning_platform/learning_platform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PC\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\learning_platform\\learning_platform.csproj",
+        "projectUniqueName": "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/learning_platform/learning_platform.csproj",
         "projectName": "learning_platform",
-        "projectPath": "C:\\Users\\PC\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\learning_platform\\learning_platform.csproj",
-        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PC\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\learning_platform\\obj\\",
+        "projectPath": "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/learning_platform/learning_platform.csproj",
+        "packagesPath": "/Users/defneyilmaz/.nuget/packages/",
+        "outputPath": "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/learning_platform/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/defneyilmaz/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.203/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",

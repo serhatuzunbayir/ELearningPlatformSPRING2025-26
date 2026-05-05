@@ -20,7 +20,8 @@ public class AuthController : Controller
     public IActionResult Login()
     {
         if (User.Identity is { IsAuthenticated: true })
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction(User.IsInRole("Admin") ? "Index" : "Index",
+                                    User.IsInRole("Admin") ? "Admin" : "Dashboard");
             
         return View();
     }
@@ -50,7 +51,9 @@ public class AuthController : Controller
                     CookieAuthenticationDefaults.AuthenticationScheme, 
                     new ClaimsPrincipal(claimsIdentity));
 
-                return RedirectToAction("Index", "Dashboard");
+                return result.Role == "Admin"
+                    ? RedirectToAction("Index", "Admin")
+                    : RedirectToAction("Index", "Dashboard");
             }
 
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
@@ -67,7 +70,8 @@ public class AuthController : Controller
     public IActionResult Register()
     {
         if (User.Identity is { IsAuthenticated: true })
-            return RedirectToAction("Index", "Dashboard");
+            return RedirectToAction(User.IsInRole("Admin") ? "Index" : "Index",
+                                    User.IsInRole("Admin") ? "Admin" : "Dashboard");
             
         return View();
     }

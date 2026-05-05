@@ -67,4 +67,40 @@ public class ApiService
         var response = await _httpClient.PostAsync(endpoint, httpContent);
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<bool> PutAsync<TRequest>(string endpoint, TRequest? data = default)
+    {
+        await AddAuthHeaderAsync();
+
+        HttpContent? httpContent = null;
+        if (data is not null)
+        {
+            var json = JsonSerializer.Serialize(data);
+            httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+        }
+
+        var response = await _httpClient.PutAsync(endpoint, httpContent);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            throw new Exception($"API Error: {response.StatusCode} - {errorContent}");
+        }
+
+        return true;
+    }
+
+    public async Task<bool> DeleteAsync(string endpoint)
+    {
+        await AddAuthHeaderAsync();
+        var response = await _httpClient.DeleteAsync(endpoint);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            throw new Exception($"API Error: {response.StatusCode} - {errorContent}");
+        }
+
+        return true;
+    }
 }

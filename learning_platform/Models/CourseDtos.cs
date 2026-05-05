@@ -28,3 +28,19 @@ public record CourseDetailDto(
 );
 
 public record CourseModuleDto(int Id, string Title, int Order);
+
+public record CreateCourseDto(
+    string Title,
+    string Description,
+    string Category,
+    DifficultyLevel Difficulty,
+    int EctsCredit
+);
+
+public record UpdateCourseDto(
+    string Title,
+    string Description,
+    string Category,
+    DifficultyLevel Difficulty,
+    int EctsCredit
+);
