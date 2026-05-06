@@ -1,0 +1,17 @@
+# Build outputs
+**/bin/
+**/obj/
+
+# User/IDE files
+*.user
+*.suo
+.vs/
+
+# Local tooling artifacts
+.dotnet/
+dotnet-install.sh
+
+# Local database/runtime files
+*.db
+*.db-shm
+*.db-wal

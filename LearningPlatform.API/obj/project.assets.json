@@ -2789,25 +2789,24 @@
     ]
   },
   "packageFolders": {
-    "/Users/defneyilmaz/.nuget/packages/": {}
+    "/var/folders/0t/_j2hkr317j1407t685pxnwg80000gn/T/cursor-sandbox-cache/2c34592ec7b5290d330be2a2b5e79355/nuget": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/LearningPlatform.API/LearningPlatform.API.csproj",
+      "projectUniqueName": "/Users/efe/ELearningPlatformSPRING2025-26/LearningPlatform.API/LearningPlatform.API.csproj",
       "projectName": "LearningPlatform.API",
-      "projectPath": "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/LearningPlatform.API/LearningPlatform.API.csproj",
-      "packagesPath": "/Users/defneyilmaz/.nuget/packages/",
-      "outputPath": "/Users/defneyilmaz/Desktop/ELearningPlatformSPRING2025-26/LearningPlatform.API/obj/",
+      "projectPath": "/Users/efe/ELearningPlatformSPRING2025-26/LearningPlatform.API/LearningPlatform.API.csproj",
+      "packagesPath": "/var/folders/0t/_j2hkr317j1407t685pxnwg80000gn/T/cursor-sandbox-cache/2c34592ec7b5290d330be2a2b5e79355/nuget",
+      "outputPath": "/Users/efe/ELearningPlatformSPRING2025-26/LearningPlatform.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/defneyilmaz/.nuget/NuGet/NuGet.Config"
+        "/Users/efe/ELearningPlatformSPRING2025-26/.dotnet/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

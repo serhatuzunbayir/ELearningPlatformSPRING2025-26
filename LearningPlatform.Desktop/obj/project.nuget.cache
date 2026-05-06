@@ -1,13 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Z0HWE3/QBTU=",
+  "dgSpecHash": "QoEABBExMjA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Vertov\\Desktop\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\LearningPlatform.Desktop.csproj",
+  "projectFilePath": "/Users/efe/ELearningPlatformSPRING2025-26/LearningPlatform.Desktop/LearningPlatform.Desktop.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Vertov\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.14\\microsoft.netcore.app.ref.9.0.14.nupkg.sha512",
-    "C:\\Users\\Vertov\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.14\\microsoft.windowsdesktop.app.ref.9.0.14.nupkg.sha512",
-    "C:\\Users\\Vertov\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.14\\microsoft.aspnetcore.app.ref.9.0.14.nupkg.sha512",
-    "C:\\Users\\Vertov\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\9.0.14\\microsoft.netcore.app.host.win-x64.9.0.14.nupkg.sha512"
+    "/var/folders/0t/_j2hkr317j1407t685pxnwg80000gn/T/cursor-sandbox-cache/2c34592ec7b5290d330be2a2b5e79355/nuget/microsoft.windowsdesktop.app.ref/10.0.7/microsoft.windowsdesktop.app.ref.10.0.7.nupkg.sha512"
   ],
   "logs": []
 }

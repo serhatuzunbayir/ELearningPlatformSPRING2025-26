@@ -1,16 +1,40 @@
+using LearningPlatform.Desktop.Forms;
+using LearningPlatform.Desktop.Models;
+using LearningPlatform.Desktop.Services;
+
 namespace LearningPlatform.Desktop;
 
 static class Program
 {
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
     [STAThread]
     static void Main()
     {
-        // To customize application configuration such as set high DPI settings or default font,
-        // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
-        Application.Run(new Form1());
-    }    
+
+        var apiClient = new ApiClient("http://localhost:5215");
+        var sessionStore = new SessionStore();
+
+        while (true)
+        {
+            var session = sessionStore.Load();
+            if (session is null)
+            {
+                using var login = new LoginForm(apiClient, sessionStore);
+                if (login.ShowDialog() != DialogResult.OK || login.Session is null)
+                {
+                    return;
+                }
+                session = login.Session;
+            }
+
+            apiClient.SetToken(session.Token);
+            using var shell = new Form1(apiClient, sessionStore, session);
+            Application.Run(shell);
+
+            if (!shell.ShouldReturnToLogin)
+            {
+                return;
+            }
+        }
+    }
 }
