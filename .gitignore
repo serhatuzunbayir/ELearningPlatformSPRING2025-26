@@ -1,17 +1,100 @@
-# Build outputs
-**/bin/
-**/obj/
+## Build outputs (.NET)
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Ll]og/
+[Ll]ogs/
+*.log
 
-# User/IDE files
-*.user
-*.suo
+## Publish / pack outputs
+artifacts/
+publish/
+**/PublishOutputs.txt
+*.appx
+*.appxbundle
+
+## NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+
+## Visual Studio / MSBuild
 .vs/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+**/PublishProfiles/*.pubxml.user
+**/PublishProfiles/*.PublishSettings
 
-# Local tooling artifacts
-.dotnet/
-dotnet-install.sh
+## Rider / JetBrains
+.idea/
+*.sln.iml
 
-# Local database/runtime files
+## VS Code (machine-local overrides only)
+.vscode/*.local.json
+
+## Test / coverage
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+coverage*.json
+coverage*.xml
+*.coverage
+*.coveragexml
+
+## SQLite / local databases
 *.db
 *.db-shm
 *.db-wal
+
+## Secrets / local settings (never commit machine-specific)
+**/appsettings.*.local.json
+**/appsettings.Local.json
+secrets.json
+
+## OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+## Local tooling / installers (repo-specific)
+.dotnet/
+dotnet-install.sh

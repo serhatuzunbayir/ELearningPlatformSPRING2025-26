@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QoEABBExMjA=",
+  "dgSpecHash": "q/NmgZrcJAY=",
   "success": true,
-  "projectFilePath": "/Users/efe/ELearningPlatformSPRING2025-26/LearningPlatform.Desktop/LearningPlatform.Desktop.csproj",
-  "expectedPackageFiles": [
-    "/var/folders/0t/_j2hkr317j1407t685pxnwg80000gn/T/cursor-sandbox-cache/2c34592ec7b5290d330be2a2b5e79355/nuget/microsoft.windowsdesktop.app.ref/10.0.7/microsoft.windowsdesktop.app.ref.10.0.7.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\LearningPlatform.Desktop.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

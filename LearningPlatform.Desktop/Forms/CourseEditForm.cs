@@ -1,4 +1,5 @@
 using LearningPlatform.Desktop.Models;
+using LearningPlatform.Desktop.UI;
 
 namespace LearningPlatform.Desktop.Forms;
 
@@ -29,7 +30,8 @@ public class CourseEditForm : Form
             _ects.Value = existing.EctsCredit;
         }
 
-        var save = new Button { Text = "Save", Width = 120 };
+        var save = new Button { Text = "Save", Width = 140, Height = 36 };
+        Theme.StylePrimaryButton(save);
         save.Click += (_, _) =>
         {
             if (string.IsNullOrWhiteSpace(_title.Text) || string.IsNullOrWhiteSpace(_category.Text))

@@ -8,19 +8,19 @@
     "net10.0": []
   },
   "packageFolders": {
-    "/var/folders/0t/_j2hkr317j1407t685pxnwg80000gn/T/cursor-sandbox-cache/2c34592ec7b5290d330be2a2b5e79355/nuget": {}
+    "C:\\Users\\Hasan Efe\\AppData\\Local\\Temp\\cursor-sandbox-cache\\cbba4055757487f272047c58f45b8a98\\nuget": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/efe/ELearningPlatformSPRING2025-26/learning_platform/learning_platform.csproj",
+      "projectUniqueName": "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\learning_platform\\learning_platform.csproj",
       "projectName": "learning_platform",
-      "projectPath": "/Users/efe/ELearningPlatformSPRING2025-26/learning_platform/learning_platform.csproj",
-      "packagesPath": "/var/folders/0t/_j2hkr317j1407t685pxnwg80000gn/T/cursor-sandbox-cache/2c34592ec7b5290d330be2a2b5e79355/nuget",
-      "outputPath": "/Users/efe/ELearningPlatformSPRING2025-26/learning_platform/obj/",
+      "projectPath": "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\learning_platform\\learning_platform.csproj",
+      "packagesPath": "C:\\Users\\Hasan Efe\\AppData\\Local\\Temp\\cursor-sandbox-cache\\cbba4055757487f272047c58f45b8a98\\nuget",
+      "outputPath": "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\learning_platform\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/efe/ELearningPlatformSPRING2025-26/.dotnet/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Hasan Efe\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -68,7 +68,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.203/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
