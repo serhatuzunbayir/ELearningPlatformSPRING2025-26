@@ -12,7 +12,7 @@ namespace LearningPlatform.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AuthController(AppDbContext db, IConfiguration config) : ControllerBase
+public class AuthController(AppDbContext db, IConfiguration config, IWebHostEnvironment env) : ControllerBase
 {
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterDto dto)
@@ -25,7 +25,8 @@ public class AuthController(AppDbContext db, IConfiguration config) : Controller
             Name = dto.Name,
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
-            Role = UserRole.Student
+            Role = UserRole.Student,
+            PreferredCategory = string.IsNullOrWhiteSpace(dto.PreferredCategory) ? null : dto.PreferredCategory.Trim()
         };
 
         db.Users.Add(user);
@@ -42,8 +43,51 @@ public class AuthController(AppDbContext db, IConfiguration config) : Controller
         if (user is null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             return Unauthorized("E-posta veya şifre hatalı.");
 
-        var token = GenerateToken(user);
+        if (user.TwoFactorEnabled)
+        {
+            var code = Random.Shared.Next(100000, 999999).ToString();
+            user.TwoFactorCode = code;
+            user.TwoFactorCodeExpiry = DateTime.UtcNow.AddMinutes(5);
+            await db.SaveChangesAsync();
 
+            Console.WriteLine($"[2FA] {user.Email} verification code: {code}");
+
+            return Ok(new LoginStepResponseDto(
+                RequiresTwoFactor: true,
+                Token: null,
+                Name: null,
+                Email: user.Email,
+                Role: null,
+                Message: "Enter the verification code sent to your account.",
+                DevVerificationCode: env.IsDevelopment() ? code : null));
+        }
+
+        var token = GenerateToken(user);
+        return Ok(new LoginStepResponseDto(
+            RequiresTwoFactor: false,
+            Token: token,
+            Name: user.Name,
+            Email: user.Email,
+            Role: user.Role.ToString(),
+            Message: null,
+            DevVerificationCode: null));
+    }
+
+    [HttpPost("verify-2fa")]
+    public async Task<IActionResult> VerifyTwoFactor(VerifyTwoFactorDto dto)
+    {
+        var user = await db.Users.FirstOrDefaultAsync(u => u.Email == dto.Email);
+        if (user is null)
+            return Unauthorized("Invalid verification request.");
+
+        if (user.TwoFactorCode != dto.Code || user.TwoFactorCodeExpiry is null || user.TwoFactorCodeExpiry < DateTime.UtcNow)
+            return Unauthorized("Invalid or expired verification code.");
+
+        user.TwoFactorCode = null;
+        user.TwoFactorCodeExpiry = null;
+        await db.SaveChangesAsync();
+
+        var token = GenerateToken(user);
         return Ok(new AuthResponseDto(token, user.Name, user.Email, user.Role.ToString()));
     }
 
@@ -64,8 +108,7 @@ public class AuthController(AppDbContext db, IConfiguration config) : Controller
             audience: config["Jwt:Audience"],
             claims: claims,
             expires: DateTime.UtcNow.AddDays(7),
-            signingCredentials: creds
-        );
+            signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
