@@ -25,6 +25,31 @@
         <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
     }
 
+    @{
+        var recommendations = ViewBag.Recommendations as List<learning_platform.Models.RecommendedCourseDto>;
+    }
+    @if (recommendations != null && recommendations.Any())
+    {
+        <div class="card shadow-sm border-0 mb-4" style="border-radius: 15px;">
+            <div class="card-body">
+                <h5 class="font-weight-bold mb-3"><i class="bi bi-lightbulb"></i> Recommended courses for you</h5>
+                <ul class="list-group list-group-flush">
+                    @foreach (var r in recommendations)
+                    {
+                        <li class="list-group-item d-flex justify-content-between">
+                            <div>
+                                <strong>@r.Title</strong>
+                                <span class="badge bg-primary ms-2">@r.Category</span>
+                                <div class="small text-muted">@r.Reason</div>
+                            </div>
+                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@r.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
     @if (Model == null)
     {
         <div class="text-center mt-5 p-5 border rounded bg-light">

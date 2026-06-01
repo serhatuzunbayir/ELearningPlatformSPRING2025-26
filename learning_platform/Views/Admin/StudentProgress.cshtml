@@ -1,0 +1,25 @@
+@model List<learning_platform.Models.StudentCourseProgressDto>
+@{
+    ViewData["Title"] = "Student Progress";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Student Progress</h1>
+    <table class="table table-hover">
+        <thead>
+            <tr><th>Student</th><th>Email</th><th>Course</th><th>Progress</th><th>%</th></tr>
+        </thead>
+        <tbody>
+        @foreach (var row in Model)
+        {
+            <tr>
+                <td>@row.StudentName</td>
+                <td>@row.StudentEmail</td>
+                <td>@row.CourseTitle</td>
+                <td>@row.CompletedModules / @row.TotalModules</td>
+                <td>@row.CompletionPercentage%</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

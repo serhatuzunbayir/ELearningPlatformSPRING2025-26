@@ -1,0 +1,35 @@
+@model learning_platform.Models.AdminAnalyticsDto
+@{
+    ViewData["Title"] = "Analytics";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">Course Analytics</h1>
+    @if (Model == null)
+    {
+        <div class="alert alert-warning">No analytics data available.</div>
+    }
+    else
+    {
+        <div class="row mb-4">
+            <div class="col-md-4"><div class="card p-3"><strong>Courses</strong><div class="display-6">@Model.TotalCourses</div></div></div>
+            <div class="col-md-4"><div class="card p-3"><strong>Students</strong><div class="display-6">@Model.TotalStudents</div></div></div>
+            <div class="col-md-4"><div class="card p-3"><strong>Pending requests</strong><div class="display-6">@Model.PendingEnrollmentRequests</div></div></div>
+        </div>
+        <table class="table table-hover">
+            <thead><tr><th>Course</th><th>Total</th><th>Approved</th><th>Pending</th><th>Avg completion %</th></tr></thead>
+            <tbody>
+            @foreach (var c in Model.Courses)
+            {
+                <tr>
+                    <td>@c.CourseTitle</td>
+                    <td>@c.TotalEnrollments</td>
+                    <td>@c.ApprovedEnrollments</td>
+                    <td>@c.PendingEnrollments</td>
+                    <td>@c.AverageCompletionPercentage%</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>

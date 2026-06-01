@@ -1,0 +1,42 @@
+@model List<learning_platform.Models.CourseModuleDetailDto>
+@{
+    var course = ViewBag.Course as learning_platform.Models.CourseDetailDto;
+    ViewData["Title"] = course?.Title ?? "Modules";
+}
+
+<div class="container mt-4">
+    <a asp-action="Courses" class="btn btn-link">Back to courses</a>
+    <h1 class="mb-3">Modules — @course?.Title</h1>
+
+    <div class="card mb-4 p-3">
+        <h5>Add module</h5>
+        <form asp-action="AddModule" method="post" class="row g-2">
+            <input type="hidden" name="courseId" value="@course?.Id" />
+            <div class="col-md-4"><input name="Title" class="form-control" placeholder="Title" required /></div>
+            <div class="col-md-4"><input name="Content" class="form-control" placeholder="Content" required /></div>
+            <div class="col-md-2"><input name="Order" type="number" class="form-control" value="1" min="1" required /></div>
+            <div class="col-md-2"><button type="submit" class="btn btn-success w-100">Add</button></div>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead><tr><th>Order</th><th>Title</th><th>Content</th><th></th></tr></thead>
+        <tbody>
+        @foreach (var m in Model.OrderBy(x => x.Order))
+        {
+            <tr>
+                <td>@m.Order</td>
+                <td>@m.Title</td>
+                <td>@m.Content</td>
+                <td>
+                    <form asp-action="DeleteModule" method="post" class="d-inline" onsubmit="return confirm('Delete module?');">
+                        <input type="hidden" name="courseId" value="@course?.Id" />
+                        <input type="hidden" name="moduleId" value="@m.Id" />
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>

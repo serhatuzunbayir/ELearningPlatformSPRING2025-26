@@ -32,8 +32,10 @@ public class AdminCoursesView : UserControl
         Theme.StyleOutlineButton(edit);
         var del = new Button { Text = "Delete", Left = 606, Top = 12, Width = 88 };
         Theme.StyleDangerOutline(del);
+        var modules = new Button { Text = "Modules", Left = 700, Top = 12, Width = 88 };
+        Theme.StyleOutlineButton(modules);
 
-        toolbar.Controls.AddRange([category, difficulty, load, add, edit, del]);
+        toolbar.Controls.AddRange([category, difficulty, load, add, edit, del, modules]);
 
         var gridHost = new GlassCardPanel { Dock = DockStyle.Fill, Padding = new Padding(8) };
         var grid = new DataGridView { Dock = DockStyle.Fill, ReadOnly = true, AutoGenerateColumns = true, BackgroundColor = Theme.CardBackground, BorderStyle = BorderStyle.None };
@@ -100,6 +102,12 @@ public class AdminCoursesView : UserControl
             if (MessageBox.Show("Delete selected course?", "Confirm", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             await _api.DeleteAsync($"/api/courses/{id.Value}");
             await RefreshCourses();
+        };
+        modules.Click += (_, _) =>
+        {
+            if (grid.CurrentRow?.DataBoundItem is not CourseListDto c) return;
+            using var form = new CourseModulesForm(_api, c.Id, c.Title);
+            form.ShowDialog(FindForm());
         };
 
         var root = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 1, RowCount = 3 };

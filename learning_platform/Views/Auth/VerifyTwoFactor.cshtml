@@ -1,0 +1,43 @@
+@model learning_platform.Models.VerifyTwoFactorDto
+@{
+    ViewData["Title"] = "Two-Factor Verification";
+    Layout = null;
+    var email = ViewBag.Email as string ?? Model?.Email ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow p-4" style="max-width: 420px; width: 100%; border-radius: 15px;">
+        <h3 class="mb-3">Two-Factor Verification</h3>
+        <p class="text-muted">Enter the 6-digit code for <strong>@email</strong></p>
+
+        @if (ViewBag.DevCode != null)
+        {
+            <div class="alert alert-info">Development code: <strong>@ViewBag.DevCode</strong></div>
+        }
+
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger" asp-validation-summary="All"></div>
+        }
+
+        <form method="post">
+            <input type="hidden" asp-for="Email" value="@email" />
+            <div class="mb-3">
+                <input asp-for="Code" class="form-control form-control-lg text-center" placeholder="000000" maxlength="6" required />
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Verify</button>
+        </form>
+        <div class="text-center mt-3">
+            <a asp-action="Login">Back to login</a>
+        </div>
+    </div>
+</body>
+</html>

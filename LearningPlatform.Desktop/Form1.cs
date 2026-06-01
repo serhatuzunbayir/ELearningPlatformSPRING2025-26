@@ -15,7 +15,9 @@ public partial class Form1 : Form
         StudentStudyPlan,
         AdminDashboard,
         AdminCourses,
-        AdminEnrollments
+        AdminEnrollments,
+        AdminStudentProgress,
+        AdminAnalytics
     }
 
     private readonly ApiClient _apiClient;
@@ -144,6 +146,8 @@ public partial class Form1 : Form
         navFlow.Controls.Add(NavButton("Admin Dashboard", ShellNav.AdminDashboard, ShowAdminDashboard));
         navFlow.Controls.Add(NavButton("Manage Courses", ShellNav.AdminCourses, ShowAdminCourses));
         navFlow.Controls.Add(NavButton("Pending Enrollments", ShellNav.AdminEnrollments, ShowAdminEnrollments));
+        navFlow.Controls.Add(NavButton("Student Progress", ShellNav.AdminStudentProgress, ShowAdminStudentProgress));
+        navFlow.Controls.Add(NavButton("Analytics", ShellNav.AdminAnalytics, ShowAdminAnalytics));
     }
 
     private static Label MakeNavHeading(string text) =>
@@ -225,6 +229,18 @@ public partial class Form1 : Form
     {
         HighlightNav(ShellNav.AdminEnrollments);
         SetHost(new AdminEnrollmentsView(_apiClient));
+    }
+
+    private void ShowAdminStudentProgress()
+    {
+        HighlightNav(ShellNav.AdminStudentProgress);
+        SetHost(new AdminStudentProgressView(_apiClient));
+    }
+
+    private void ShowAdminAnalytics()
+    {
+        HighlightNav(ShellNav.AdminAnalytics);
+        SetHost(new AdminAnalyticsView(_apiClient));
     }
 
     private async void OnAdminCreateCourse()

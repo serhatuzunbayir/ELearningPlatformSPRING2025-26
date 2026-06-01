@@ -1,3 +1,4 @@
+using System.Text.Json;
 using LearningPlatform.Desktop.Forms;
 using LearningPlatform.Desktop.Models;
 using LearningPlatform.Desktop.Services;
@@ -11,7 +12,7 @@ static class Program
     {
         ApplicationConfiguration.Initialize();
 
-        var apiClient = new ApiClient("http://localhost:5215");
+        var apiClient = new ApiClient(ResolveApiBaseUrl());
         var sessionStore = new SessionStore();
 
         while (true)
@@ -36,5 +37,28 @@ static class Program
                 return;
             }
         }
+    }
+
+    private static string ResolveApiBaseUrl()
+    {
+        try
+        {
+            var path = Path.Combine(AppContext.BaseDirectory, "appsettings.json");
+            if (!File.Exists(path)) return "http://localhost:5215";
+
+            using var doc = JsonDocument.Parse(File.ReadAllText(path));
+            if (doc.RootElement.TryGetProperty("ApiSettings", out var api) &&
+                api.TryGetProperty("BaseUrl", out var url))
+            {
+                var value = url.GetString();
+                if (!string.IsNullOrWhiteSpace(value)) return value;
+            }
+        }
+        catch
+        {
+            // fall back to default local API
+        }
+
+        return "http://localhost:5215";
     }
 }

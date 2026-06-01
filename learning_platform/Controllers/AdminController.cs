@@ -203,6 +203,66 @@ public class AdminController : Controller
 
         return RedirectToAction(nameof(Enrollments));
     }
+
+    public async Task<IActionResult> Analytics()
+    {
+        try
+        {
+            var data = await _apiService.GetAsync<AdminAnalyticsDto>("/api/admin/analytics");
+            return View(data);
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(null);
+        }
+    }
+
+    public async Task<IActionResult> StudentProgress()
+    {
+        try
+        {
+            var rows = await _apiService.GetAsync<List<StudentCourseProgressDto>>("/api/admin/students/progress");
+            return View(rows ?? new List<StudentCourseProgressDto>());
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return View(new List<StudentCourseProgressDto>());
+        }
+    }
+
+    public async Task<IActionResult> CourseModules(int courseId)
+    {
+        try
+        {
+            var course = await _apiService.GetAsync<CourseDetailDto>($"/api/courses/{courseId}");
+            var modules = await _apiService.GetAsync<List<CourseModuleDetailDto>>($"/api/courses/{courseId}/modules");
+            ViewBag.Course = course;
+            return View(modules ?? new List<CourseModuleDetailDto>());
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = ex.Message;
+            return RedirectToAction(nameof(Courses));
+        }
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddModule(int courseId, CreateModuleDto model)
+    {
+        await _apiService.PostAsync($"/api/courses/{courseId}/modules", model);
+        return RedirectToAction(nameof(CourseModules), new { courseId });
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteModule(int courseId, int moduleId)
+    {
+        await _apiService.DeleteAsync($"/api/courses/{courseId}/modules/{moduleId}");
+        return RedirectToAction(nameof(CourseModules), new { courseId });
+    }
 }
 
 // Admin Index sayfasına özet veriyi taşıyan basit view model.

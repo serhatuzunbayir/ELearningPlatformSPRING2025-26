@@ -19,6 +19,12 @@ public class StudyPlanController : Controller
     {
         try
         {
+            if (User.IsInRole("Student"))
+            {
+                ViewBag.Recommendations = await _apiService.GetAsync<List<RecommendedCourseDto>>("/api/recommendations")
+                    ?? new List<RecommendedCourseDto>();
+            }
+
             var plan = await _apiService.GetAsync<StudyPlanDto>("/api/studyplan");
             return View(plan);
         }

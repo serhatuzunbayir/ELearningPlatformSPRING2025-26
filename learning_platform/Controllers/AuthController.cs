@@ -33,28 +33,24 @@ public class AuthController : Controller
 
         try
         {
-            var result = await _apiService.PostAsync<LoginDto, AuthResponseDto>("/api/auth/login", model);
+            var result = await _apiService.PostAsync<LoginDto, LoginStepResponseDto>("/api/auth/login", model);
 
-            if (result != null && !string.IsNullOrEmpty(result.Token))
+            if (result is null)
             {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, result.Name),
-                    new Claim(ClaimTypes.Email, result.Email),
-                    new Claim(ClaimTypes.Role, result.Role),
-                    new Claim("access_token", result.Token)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme, 
-                    new ClaimsPrincipal(claimsIdentity));
-
-                return result.Role == "Admin"
-                    ? RedirectToAction("Index", "Admin")
-                    : RedirectToAction("Index", "Dashboard");
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(model);
             }
+
+            if (result.RequiresTwoFactor)
+            {
+                TempData["TwoFactorEmail"] = result.Email;
+                if (!string.IsNullOrEmpty(result.DevVerificationCode))
+                    TempData["DevVerificationCode"] = result.DevVerificationCode;
+                return RedirectToAction(nameof(VerifyTwoFactor));
+            }
+
+            if (!string.IsNullOrEmpty(result.Token))
+                return await SignInAndRedirect(result.Token, result.Name!, result.Email!, result.Role!);
 
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         }
@@ -101,10 +97,56 @@ public class AuthController : Controller
         return View(model);
     }
 
+    [HttpGet]
+    public IActionResult VerifyTwoFactor()
+    {
+        ViewBag.Email = TempData["TwoFactorEmail"] as string ?? "";
+        ViewBag.DevCode = TempData["DevVerificationCode"] as string;
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> VerifyTwoFactor(VerifyTwoFactorDto model)
+    {
+        try
+        {
+            var result = await _apiService.PostAsync<VerifyTwoFactorDto, AuthResponseDto>("/api/auth/verify-2fa", model);
+            if (result is not null && !string.IsNullOrEmpty(result.Token))
+                return await SignInAndRedirect(result.Token, result.Name, result.Email, result.Role);
+
+            ModelState.AddModelError(string.Empty, "Invalid verification code.");
+        }
+        catch (Exception ex)
+        {
+            ModelState.AddModelError(string.Empty, "Error: " + ex.Message);
+        }
+
+        return View(model);
+    }
+
     [HttpPost]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
         return RedirectToAction("Login", "Auth");
+    }
+
+    private async Task<IActionResult> SignInAndRedirect(string token, string name, string email, string role)
+    {
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.Name, name),
+            new(ClaimTypes.Email, email),
+            new(ClaimTypes.Role, role),
+            new("access_token", token)
+        };
+
+        await HttpContext.SignInAsync(
+            CookieAuthenticationDefaults.AuthenticationScheme,
+            new ClaimsPrincipal(new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme)));
+
+        return role == "Admin"
+            ? RedirectToAction("Index", "Admin")
+            : RedirectToAction("Index", "Dashboard");
     }
 }

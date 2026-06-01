@@ -1,8 +1,19 @@
 namespace LearningPlatform.Desktop.Models;
 
-public record RegisterDto(string Name, string Email, string Password);
+public record RegisterDto(string Name, string Email, string Password, string? PreferredCategory = null);
 public record LoginDto(string Email, string Password);
 public record AuthResponseDto(string Token, string Name, string Email, string Role);
+
+public record VerifyTwoFactorDto(string Email, string Code);
+
+public record LoginStepResponseDto(
+    bool RequiresTwoFactor,
+    string? Token,
+    string? Name,
+    string? Email,
+    string? Role,
+    string? Message,
+    string? DevVerificationCode);
 
 public enum DifficultyLevel
 {
@@ -32,6 +43,12 @@ public record CourseDetailDto(
 );
 
 public record CourseModuleDto(int Id, string Title, int Order);
+
+public record CreateModuleDto(string Title, string Content, int Order);
+
+public record UpdateModuleDto(string Title, string Content, int Order);
+
+public record CourseModuleDetailDto(int Id, string Title, string Content, int Order);
 public record CreateCourseDto(string Title, string Description, string Category, DifficultyLevel Difficulty, int EctsCredit);
 public record UpdateCourseDto(string Title, string Description, string Category, DifficultyLevel Difficulty, int EctsCredit);
 
@@ -74,3 +91,29 @@ public record StudyPlanItemDto(int CourseId, string CourseTitle, string Category
 public record StudyPlanDto(int Id, DateTime GeneratedAt, IEnumerable<StudyPlanItemDto> Items);
 
 public record UserSession(string Token, string Name, string Email, string Role);
+
+public record StudentCourseProgressDto(
+    int StudentId,
+    string StudentName,
+    string StudentEmail,
+    int CourseId,
+    string CourseTitle,
+    int CompletedModules,
+    int TotalModules,
+    double CompletionPercentage);
+
+public record CourseAnalyticsDto(
+    int CourseId,
+    string CourseTitle,
+    int TotalEnrollments,
+    int ApprovedEnrollments,
+    int PendingEnrollments,
+    double AverageCompletionPercentage);
+
+public record AdminAnalyticsDto(
+    int TotalCourses,
+    int TotalStudents,
+    int PendingEnrollmentRequests,
+    IEnumerable<CourseAnalyticsDto> Courses);
+
+public record RecommendedCourseDto(int Id, string Title, string Category, string Reason);

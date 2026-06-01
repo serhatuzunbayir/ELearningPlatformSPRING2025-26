@@ -138,14 +138,52 @@ public class LoginForm : Form
         try
         {
             var dto = new LoginDto(_emailText.Text.Trim(), _passwordText.Text);
-            var response = await _apiClient.PostAsync<LoginDto, AuthResponseDto>("/api/auth/login", dto);
-            if (response is null)
+            var step = await _apiClient.PostAsync<LoginDto, LoginStepResponseDto>("/api/auth/login", dto);
+            if (step is null)
             {
                 MessageBox.Show("Login failed.", Text);
                 return;
             }
 
-            Session = new UserSession(response.Token, response.Name, response.Email, response.Role);
+            string token;
+            string name;
+            string email;
+            string role;
+
+            if (step.RequiresTwoFactor)
+            {
+                var code = PromptForVerificationCode(step.DevVerificationCode);
+                if (string.IsNullOrWhiteSpace(code)) return;
+
+                var verified = await _apiClient.PostAsync<VerifyTwoFactorDto, AuthResponseDto>(
+                    "/api/auth/verify-2fa",
+                    new VerifyTwoFactorDto(step.Email ?? dto.Email, code.Trim()));
+                if (verified is null)
+                {
+                    MessageBox.Show("Invalid verification code.", Text);
+                    return;
+                }
+
+                token = verified.Token;
+                name = verified.Name;
+                email = verified.Email;
+                role = verified.Role;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(step.Token))
+                {
+                    MessageBox.Show("Login failed.", Text);
+                    return;
+                }
+
+                token = step.Token;
+                name = step.Name!;
+                email = step.Email!;
+                role = step.Role!;
+            }
+
+            Session = new UserSession(token, name, email, role);
             _sessionStore.Save(Session);
             DialogResult = DialogResult.OK;
             Close();
@@ -154,5 +192,33 @@ public class LoginForm : Form
         {
             MessageBox.Show(ex.Message, "Login error");
         }
+    }
+
+    private static string? PromptForVerificationCode(string? devCode)
+    {
+        using var prompt = new Form
+        {
+            Text = "Two-Factor Authentication",
+            Width = 380,
+            Height = devCode is null ? 150 : 180,
+            FormBorderStyle = FormBorderStyle.FixedDialog,
+            StartPosition = FormStartPosition.CenterParent,
+            MaximizeBox = false,
+            MinimizeBox = false
+        };
+        var label = new Label
+        {
+            Text = devCode is null ? "Enter 6-digit code:" : $"Enter code (dev: {devCode}):",
+            Left = 16,
+            Top = 16,
+            AutoSize = true
+        };
+        var box = new TextBox { Left = 16, Top = 44, Width = 330 };
+        var ok = new Button { Text = "Verify", DialogResult = DialogResult.OK, Left = 200, Top = 78, Width = 80 };
+        var cancel = new Button { Text = "Cancel", DialogResult = DialogResult.Cancel, Left = 290, Top = 78, Width = 80 };
+        prompt.Controls.AddRange([label, box, ok, cancel]);
+        prompt.AcceptButton = ok;
+        prompt.CancelButton = cancel;
+        return prompt.ShowDialog() == DialogResult.OK ? box.Text.Trim() : null;
     }
 }
