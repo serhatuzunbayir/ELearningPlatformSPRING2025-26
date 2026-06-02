@@ -14,6 +14,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
 {
     private readonly HttpClient _client;
     private readonly CustomWebApplicationFactory _factory;
+    // JSON field names can differ by casing.
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
     public ApiIntegrationTests(CustomWebApplicationFactory factory)
@@ -27,6 +28,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
     {
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<LearningPlatform.API.Data.AppDbContext>();
+        // Create/update test DB schema.
         db.Database.Migrate();
 
         EnsureUser(db, "admin@test.com", "Test Admin", "Admin1234!", UserRole.Admin, twoFactorEnabled: false);
@@ -44,6 +46,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
             };
             db.Courses.Add(course);
             db.SaveChanges();
+            // Add one module for progress tests.
             db.CourseModules.Add(new CourseModule { CourseId = course.Id, Title = "M1", Content = "C", Order = 1 });
             db.SaveChanges();
         }
@@ -58,6 +61,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
         bool twoFactorEnabled = false,
         string? preferredCategory = null)
     {
+        // Skip if user already exists.
         if (db.Users.Any(u => u.Email == email))
             return;
 
@@ -75,6 +79,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
 
     private async Task<string> LoginAsync(string email, string password)
     {
+        // These tests use non-2FA login.
         var response = await _client.PostAsJsonAsync("/api/auth/login", new LoginDto(email, password));
         response.EnsureSuccessStatusCode();
         var step = await response.Content.ReadFromJsonAsync<LoginStepResponseDto>(JsonOptions);
@@ -196,6 +201,7 @@ public class ApiIntegrationTests : IClassFixture<CustomWebApplicationFactory>
 
     private async Task<int> GetFirstCourseIdAsync()
     {
+        // Use seeded course id.
         var courses = await _client.GetFromJsonAsync<List<CourseListDto>>("/api/courses", JsonOptions);
         Assert.NotNull(courses);
         Assert.NotEmpty(courses!);

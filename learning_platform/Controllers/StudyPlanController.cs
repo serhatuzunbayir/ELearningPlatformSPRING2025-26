@@ -21,6 +21,7 @@ public class StudyPlanController : Controller
         {
             if (User.IsInRole("Student"))
             {
+                // Recommendations are only relevant for student-facing study plan page.
                 ViewBag.Recommendations = await _apiService.GetAsync<List<RecommendedCourseDto>>("/api/recommendations")
                     ?? new List<RecommendedCourseDto>();
             }
@@ -32,7 +33,7 @@ public class StudyPlanController : Controller
         {
             if (ex.Message.Contains("404"))
             {
-                // No plan exists yet
+                // No plan generated yet: view should show "generate plan" state.
                 return View(null);
             }
             TempData["ErrorMessage"] = "Could not load study plan: " + ex.Message;

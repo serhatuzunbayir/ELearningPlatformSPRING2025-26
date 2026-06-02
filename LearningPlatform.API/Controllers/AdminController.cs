@@ -12,7 +12,6 @@ namespace LearningPlatform.API.Controllers;
 [Authorize(Roles = "Admin")]
 public class AdminController(AppDbContext db) : ControllerBase
 {
-    /// <summary>FR9 — per-student progress for approved enrollments (LINQ aggregates).</summary>
     [HttpGet("students/progress")]
     public async Task<IActionResult> GetStudentProgress()
     {
@@ -29,6 +28,7 @@ public class AdminController(AppDbContext db) : ControllerBase
             .Select(g => new { g.Key.UserId, g.Key.CourseId, Count = g.Count() })
             .ToListAsync();
 
+        // Build one progress row per approved enrollment.
         var rows = enrollments.Select(e =>
         {
             int total = e.Course.Modules.Count;
@@ -53,7 +53,6 @@ public class AdminController(AppDbContext db) : ControllerBase
         return Ok(rows);
     }
 
-    /// <summary>FR10 — enrollment and completion metrics per course.</summary>
     [HttpGet("analytics")]
     public async Task<IActionResult> GetAnalytics()
     {
@@ -67,6 +66,7 @@ public class AdminController(AppDbContext db) : ControllerBase
             .Select(mc => new { mc.UserId, CourseId = mc.Module.CourseId })
             .ToListAsync();
 
+        // Build analytics for each course.
         var courseAnalytics = courses.Select(c =>
         {
             var approved = c.Enrollments.Where(e => e.Status == EnrollmentStatus.Approved).ToList();

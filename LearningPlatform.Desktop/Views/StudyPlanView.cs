@@ -173,6 +173,7 @@ public class StudyPlanView : UserControl
                 Width = scrollHost.ClientSize.Width - 8
             };
 
+            // One card per day.
             foreach (var dayGroup in plan.Items.GroupBy(i => i.ScheduledDay).OrderBy(g => g.Key))
             {
                 var card = new GlassCardPanel { Width = 280, Margin = new Padding(12), Padding = new Padding(0) };
@@ -182,6 +183,7 @@ public class StudyPlanView : UserControl
 
                 var listHost = new FlowLayoutPanel { Dock = DockStyle.Fill, FlowDirection = FlowDirection.TopDown, AutoSize = true, Padding = new Padding(8), WrapContents = false };
 
+                // Add course rows for this day.
                 foreach (var item in dayGroup)
                 {
                     var row = new Panel { Width = 252, AutoSize = true, Margin = new Padding(0, 6, 0, 6), Padding = new Padding(8), BackColor = Theme.PageBackground };

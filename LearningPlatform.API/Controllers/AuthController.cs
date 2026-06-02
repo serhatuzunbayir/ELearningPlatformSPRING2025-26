@@ -45,6 +45,7 @@ public class AuthController(AppDbContext db, IConfiguration config, IWebHostEnvi
 
         if (user.TwoFactorEnabled)
         {
+            // 2FA code is valid for 5 minutes.
             var code = Random.Shared.Next(100000, 999999).ToString();
             user.TwoFactorCode = code;
             user.TwoFactorCodeExpiry = DateTime.UtcNow.AddMinutes(5);
@@ -93,6 +94,7 @@ public class AuthController(AppDbContext db, IConfiguration config, IWebHostEnvi
 
     private string GenerateToken(User user)
     {
+        // Role claim is used by [Authorize(Roles = "...")].
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"]!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 

@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
+// Shared SQLite path.
 var dbConnectionString = DatabasePathHelper.BuildConnectionString(builder.Environment.ContentRootPath);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(dbConnectionString));
@@ -40,6 +41,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    // Apply migrations first.
     db.Database.Migrate();
 
     if (!db.Users.Any(u => u.Role == UserRole.Admin))
@@ -81,6 +83,7 @@ using (var scope = app.Services.CreateScope())
 
     if (!db.CourseModules.Any(m => m.CourseId == sampleCourse.Id))
     {
+        // Add sample modules.
         db.CourseModules.AddRange(
             new CourseModule
             {

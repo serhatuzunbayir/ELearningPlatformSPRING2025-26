@@ -14,6 +14,7 @@ public class AdminAnalyticsView : UserControl
 
         var title = new Label { Text = "Course Analytics", Font = Theme.UiFont(18f, FontStyle.Bold), Dock = DockStyle.Top, AutoSize = true };
         var summary = new Label { Dock = DockStyle.Top, AutoSize = true, Padding = new Padding(0, 12, 0, 12) };
+        // Analytics table is read-only.
         var grid = new DataGridView { Dock = DockStyle.Fill, ReadOnly = true, AutoGenerateColumns = true };
 
         Controls.Add(grid);

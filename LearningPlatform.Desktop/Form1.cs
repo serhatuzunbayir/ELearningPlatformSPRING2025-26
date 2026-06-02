@@ -173,6 +173,7 @@ public partial class Form1 : Form
 
     private void HighlightNav(ShellNav id)
     {
+        // Highlight active menu item.
         foreach (var b in _navButtons)
             Theme.StyleSidebarButton(b, b.Tag is ShellNav nid && nid == id);
     }

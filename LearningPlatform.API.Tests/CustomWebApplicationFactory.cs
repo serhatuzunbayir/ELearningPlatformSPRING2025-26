@@ -17,10 +17,12 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
         builder.ConfigureServices(services =>
         {
+            // Replace app DB with test DB.
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
             if (descriptor is not null)
                 services.Remove(descriptor);
 
+            // Use in-memory SQLite for tests.
             _connection = new SqliteConnection("Data Source=:memory:");
             _connection.Open();
 

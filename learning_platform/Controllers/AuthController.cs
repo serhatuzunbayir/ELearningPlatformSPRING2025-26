@@ -43,6 +43,7 @@ public class AuthController : Controller
 
             if (result.RequiresTwoFactor)
             {
+                // Keep email between requests.
                 TempData["TwoFactorEmail"] = result.Email;
                 if (!string.IsNullOrEmpty(result.DevVerificationCode))
                     TempData["DevVerificationCode"] = result.DevVerificationCode;
@@ -133,6 +134,7 @@ public class AuthController : Controller
 
     private async Task<IActionResult> SignInAndRedirect(string token, string name, string email, string role)
     {
+        // Save token in auth claims.
         var claims = new List<Claim>
         {
             new(ClaimTypes.Name, name),
