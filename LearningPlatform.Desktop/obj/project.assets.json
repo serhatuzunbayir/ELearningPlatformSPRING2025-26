@@ -8,19 +8,19 @@
     "net10.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Hasan Efe\\.nuget\\packages\\": {}
+    "C:\\Users\\canoz\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\LearningPlatform.Desktop.csproj",
+      "projectUniqueName": "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\LearningPlatform.Desktop.csproj",
       "projectName": "LearningPlatform.Desktop",
-      "projectPath": "C:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\LearningPlatform.Desktop.csproj",
-      "packagesPath": "C:\\Users\\Hasan Efe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\obj\\",
+      "projectPath": "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\LearningPlatform.Desktop.csproj",
+      "packagesPath": "C:\\Users\\canoz\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.Desktop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Hasan Efe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\canoz\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0-windows"
@@ -44,7 +44,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0-windows7.0": {
@@ -68,7 +68,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj": {}
+    "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj": {
+    "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj",
+        "projectUniqueName": "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj",
         "projectName": "LearningPlatform.API",
-        "projectPath": "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj",
-        "packagesPath": "C:\\Users\\Hasan Efe\\AppData\\Local\\Temp\\cursor-sandbox-cache\\cbba4055757487f272047c58f45b8a98\\nuget",
-        "outputPath": "c:\\Users\\Hasan Efe\\Documents\\GitHub\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\obj\\",
+        "projectPath": "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\LearningPlatform.API.csproj",
+        "packagesPath": "C:\\Users\\canoz\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\canoz\\OneDrive\\Documents\\ELearningPlatformSPRING2025-26\\LearningPlatform.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Hasan Efe\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\canoz\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net10.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.200"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net10.0": {
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.AspNetCore": "(,10.0.32767]",
             "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
